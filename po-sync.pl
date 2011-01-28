@@ -37,7 +37,7 @@ while (my $lineOrg = <FORG>) {
 	next if ($msgidFound == 0);
 	printf FOUT "%s", $msgid;
 	# line is msgstr and what's going to follow is translation
-	seek(FMOD, 0, 1);
+	seek(FMOD, 0, 0);
 	while (my $lineMod = <FMOD>) {
 		chomp($lineMod);
 		next if ($lineMod !~ /^msgid/ && $msgidModFound == 0);
@@ -52,7 +52,7 @@ while (my $lineOrg = <FORG>) {
 		}
 		next if ($msgidModFound == 0);
 		next if ($lineMod !~ /^msgstr/);
-		if ($msgid =~ /\Q$msgidMod\E/) {
+		if ($msgid eq $msgidMod) {
 			printf FOUT "%s\n", $lineMod;
 			while (my $tmp = <FMOD>) {
 				chomp($tmp);
